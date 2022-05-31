@@ -1,13 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
+
+// react router
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+
+// redux
+import store from './app/store'
+import { Provider } from 'react-redux'
+
+// flowbite CSS Style 
+import 'flowbite'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <BrowserRouter>
+        <main className="bg-gray-50 dark:bg-gray-900">
+          <Routes>
+            <Route path="/app" element={<App />}/>
+          </Routes>
+        </main>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 

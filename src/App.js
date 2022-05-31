@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { Button } from 'flowbite-react'
 
 function App() {
   return (
@@ -17,6 +18,13 @@ function App() {
         >
           Learn React
         </a>
+        <Button
+          outline={true}
+          gradientDuoTone="purpleToBlue"
+        >
+          Purple to Blue
+        </Button>
+        <p>123{localStorage.getItem('color-theme') || '123'}</p>
       </header>
     </div>
   );
