@@ -5,7 +5,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 // react router
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 // redux
 import store from './app/store'
@@ -14,20 +14,17 @@ import { Provider } from 'react-redux'
 // flowbite CSS Style 
 import 'flowbite'
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <main className="bg-gray-50 dark:bg-gray-900">
-          <Routes>
-            <Route path="/app" element={<App />}/>
-          </Routes>
-        </main>
-      </BrowserRouter>
+      <Router>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </Router>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
