@@ -1,9 +1,20 @@
 import PropTypes from 'prop-types'
 import DynamicHeroIcon from './DynamicHeroIcon'
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 function SidebarItem (props) {
+
+  const [path, setPath] = useState(null);
+  const Navigate = useNavigate();
+
+  useEffect(() => {
+    if (path) Navigate(path)
+    setPath(null)
+  }, [path])
+
   return (
-    <li>
+    <li onClick={() => setPath(props.path)}>
       <a className={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ${props.active === 'true' ? 'bg-gray-100 dark:bg-gray-700' : ''}`}>
           <DynamicHeroIcon icon={props.icon}></DynamicHeroIcon>
           <span className="flex-1 ml-3 whitespace-nowrap" sidebar-toggle-item="true">{props.children}</span>
@@ -17,7 +28,8 @@ SidebarItem.propTypes = {
   children: PropTypes.string,
   active: PropTypes.string,
   label: PropTypes.string,
-  icon: PropTypes.string
+  icon: PropTypes.string,
+  path: PropTypes.string,
 };
 
 export default SidebarItem

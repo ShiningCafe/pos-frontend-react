@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import testReducer from './testReducer'
+import commoditySlice from '../features/commodity/commoditySlice'
+import orderSlice from '../features/commodity/orderSlice'
 
 export default configureStore({
   reducer: {
-    test: testReducer
-  }
+    commodity: commoditySlice,
+    order: orderSlice,
+  },
 })

@@ -1,14 +1,16 @@
+// 負責控制 sidebar 的項目
 const SidebarList = [
   {
-    title: '主選單',
-    icon: 'HomeIcon'
+    title: '首頁',
+    icon: 'HomeIcon',
+    path: '/',
   },
   {
-    title: '點餐',
+    title: '商品',
     icon: 'ViewGridAddIcon',
-    label: '99+'
+    label: '99+',
+    path: '/commodity',
   },
-
 ]
 
 export default SidebarList
