@@ -11,6 +11,20 @@ const SidebarList = [
     label: '99+',
     path: '/commodity',
   },
+  {
+    title: '統計',
+    icon: 'DocumentReportIcon',
+    child: [
+      {
+        title: '日報表',
+        path: '/day-report',
+      },
+      {
+        title: '月報表',
+        path: '/month-report',
+      },
+    ]
+  }
 ]
 
 export default SidebarList

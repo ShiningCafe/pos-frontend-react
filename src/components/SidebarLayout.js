@@ -1,5 +1,6 @@
 import React from 'react'
 import SidebarItem from './SidebarItem'
+import SidebarItemDropdown from './SidebarItemDropdown'
 import SidebarList from './SidebarList'
 
 function SidebarLayout() {
@@ -15,12 +16,23 @@ function SidebarLayout() {
             <div className="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
               <ul className="pb-2 space-y-2">
                 {SidebarList.map((item, key) => {
+                  if (item.child) {
+                    return (
+                      <SidebarItemDropdown
+                        key={`sidebar-${key}`}
+                        icon={item.icon}
+                        label={item.label}
+                        child={item.child}
+                      >
+                        {item.title}
+                      </SidebarItemDropdown>
+                    )
+                  }
                   return (
                     <SidebarItem
                       key={`sidebar-${key}`}
                       icon={item.icon}
                       label={item.label}
-                      active={item.active}
                       path={item.path}
                     >
                       {item.title}

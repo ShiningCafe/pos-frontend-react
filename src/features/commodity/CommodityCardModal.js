@@ -156,6 +156,8 @@ const CommodityCardModal = () => {
         </div>
       )
     })
+  } else {
+    specDiv = (<span className='text-gray-600'>無設定規格</span>)
   }
 
   // 取消及右上打叉按鈕：關閉 Modal
