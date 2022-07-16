@@ -1,5 +1,6 @@
 import { createSlice, nanoid, current } from '@reduxjs/toolkit'
 import _ from 'lodash'
+import dayjs from 'dayjs'
 import { db } from '../../app/db'
 
 export const orderSlice = createSlice({
@@ -20,23 +21,35 @@ export const orderSlice = createSlice({
     },
     checkoutOrder: (state) => {
       const order = _.cloneDeep(current(state.order))
-      let total = 0
-      order.forEach(el => {
-        delete el._id
-        total += el.price
-        total += el.specification.reduce((sum, c) => {
-          if (c.price) sum += c.price
-          return sum
-        }, 0)
-      })
-      const final = {
-        _id: nanoid(),
-        contents: order,
-        price: total,
-        createdAt: new Date()
-      }
-      db.orders.add(final)
       state.order = []
+      // 從資料庫撈出今天的訂單好計算單號
+      const today = dayjs().format('YYYY/MM/DD')
+      // db.orders.where('createdAt').between(new Date(`${today} 00:00:00`), new Date(`${today} 23:59:59`)).count().then(count => {
+        db.orders.where('createdAt').between(new Date(`${today} 00:00:00`), new Date(`${today} 23:59:59`)).last().then(res => {
+        let serialNumber = 1
+        if (res) serialNumber = res.serial + 1
+        
+        // 計算總金額
+        let total = 0
+        order.forEach(el => {
+          delete el._id
+          total += el.price
+          total += el.specification.reduce((sum, c) => {
+            if (c.price) sum += c.price
+            return sum
+          }, 0)
+        })
+        // 最後要寫入的資料
+        const final = {
+          _id: nanoid(),
+          serial: serialNumber,
+          contents: order,
+          price: total,
+          createdAt: new Date()
+        }
+        console.log(final)
+        db.orders.add(final)
+      })
     }
   },
 })

@@ -14,7 +14,7 @@ const SidebarItemDropdown = (props) => {
     setPath(null)
   }, [path])
 
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(false)
   let div
 
   const list = []

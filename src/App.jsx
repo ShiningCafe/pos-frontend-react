@@ -4,8 +4,19 @@ import TestPage from './pages/test'
 import Commodity from './features/commodity/Commodity'
 import DayReport from './features/report/DayReport'
 import MonthReport from './features/report/MonthReport'
+//
+// redux
+//
+import { useDispatch } from 'react-redux'
+import { getCommoditiesFromIndexedDB } from './features/commodity/commoditySlice'
+import { useEffect } from 'react'
 
 function App() {
+  const dispatch = useDispatch()
+  // 初始化 redux
+  useEffect(() => {
+    dispatch(getCommoditiesFromIndexedDB())
+  }, [])
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

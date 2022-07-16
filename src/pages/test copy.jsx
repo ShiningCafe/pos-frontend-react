@@ -1,4 +1,6 @@
+
 function TestPage() {
+  console.log('RUN')
   return (
     <div className="px-4 pt-6 pb-2">
       <div className="p-4 bg-white rounded-lg shadow sm:p-6 xl:p-8 dark:bg-gray-800">

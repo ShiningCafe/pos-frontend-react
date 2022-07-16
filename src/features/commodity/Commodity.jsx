@@ -9,9 +9,12 @@ import { getCommoditiesByCategory } from './commoditySlice'
 const Commodity = () => {
 
   const selectedCommodities = useSelector(getCommoditiesByCategory)
-  const selectedCommodityDiv = selectedCommodities.map((val) => (
-    <CommodityCard key={val._id} item={val} />
-  ))
+  let selectedCommodityDiv
+  if (selectedCommodities.length > 0) {
+    selectedCommodityDiv = selectedCommodities.map((val) => (
+      <CommodityCard key={val._id} item={val} />
+    ))
+  }
 
   return (
     <div className="px-4 pt-6 pb-2">
