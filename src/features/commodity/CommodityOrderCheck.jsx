@@ -27,7 +27,7 @@ const CommodityOrderCheck = () => {
       <Button
         onClick={onOpen}
         gradientDuoTone="pinkToOrange"
-        className="absolute bottom-0 right-0 mx-2 mb-6 z-50"
+        className="fixed bottom-0 right-0 mx-2 mb-6 z-50"
       >
         結帳 ${totalPrice}
       </Button>

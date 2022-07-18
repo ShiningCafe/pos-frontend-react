@@ -45,7 +45,9 @@ export const orderSlice = createSlice({
           serial: serialNumber,
           contents: order,
           price: total,
-          createdAt: new Date()
+          createdAt: new Date(),
+          voidedAt: null,
+          syncedAt: null,
         }
         console.log(final)
         db.orders.add(final)

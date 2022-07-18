@@ -3,8 +3,8 @@ import { db } from '../app/db'
 function TestPage() {
   //
   async function initDB () {
-    await db.commoditys.clear()
-    await db.commoditys.bulkAdd([
+    await db.commodities.clear()
+    await db.commodities.bulkAdd([
       {
         _id: '312421',
         name: '多多綠',
@@ -96,7 +96,7 @@ function TestPage() {
 
   return (
     <div className="px-4 pt-6 pb-2">
-      <Button onClick={initDB}>INIT Commoditys</Button>
+      <Button onClick={initDB}>INIT Commodities</Button>
     </div>
   )
 }

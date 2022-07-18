@@ -52,7 +52,7 @@ export const getCategories = (state) => {
 }
 export const getCommoditiesFromIndexedDB = createAsyncThunk('commoditiy/get',
   async () => {
-    return await db.commoditys.toArray()
+    return await db.commodities.toArray()
   }
 )
 // export const getCategory = (state) => state.commodity.category

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 // flowbite UI
 import { Card, Table } from 'flowbite-react'
 // db
@@ -10,24 +10,25 @@ import dayjs from 'dayjs'
 import LineChart from '../../components/LineChart';
 import ItemDoughnutChart from './ItemDoughnutChart';
 import ItemDistributed from './ItemDistributed';
+import ItemDetailModal from './ItemDetailModal';
 
 const DayReport = () => {
 
   //
   // 從資料庫撈資料  
   //
-  const data = useLiveQuery(async () => {
+  const originData = useLiveQuery(async () => {
     const today = dayjs().format('YYYY/MM/DD')
     return await db.orders.where('createdAt').between(new Date(`${today} 00:00:00`), new Date(`${today} 23:59:59`)).toArray();
   })
-
+  const data = originData ? originData.filter(el => el.voidedAt === null) : []
   //
   // 製造表格的內容 DIV
   //
   let recordDiv = []
   function renderTable () {
-    data.reverse()
-    data.forEach((order) => {
+    originData.reverse()
+    originData.forEach((order) => {
       order.contents.forEach((item, idx) => {
         const specPrice = item.specification.reduce((sum, c) => {
           if (c.price) {
@@ -36,20 +37,37 @@ const DayReport = () => {
             return sum
           }
         }, item.price)
-        recordDiv.push(
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={`table_row_${order._id}_${idx}`}>
-            <Table.Cell className="font-bold">
-            { idx === 0 ? `${order.serial}` : '' }
-            </Table.Cell>
-            <Table.Cell>{ idx === 0 ? `$${order.price}` : '' }</Table.Cell>
-            <Table.Cell>${ specPrice }</Table.Cell>
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{ item.name }</Table.Cell>
-            <Table.Cell>{ idx === 0 ? dayjs(order.createdAt).format('HH:mm:ss') : '' }</Table.Cell>
-            <Table.Cell className="whitespace-nowrap font-medium text-blue-600 dark:text-blue-500">
-            詳細
-            </Table.Cell>
-          </Table.Row>
-        )
+        if (!order.voidedAt) {
+          recordDiv.push(
+            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={`table_row_${order._id}_${idx}`}>
+              <Table.Cell className="font-bold">
+              { idx === 0 ? `${order.serial}` : '' }
+              </Table.Cell>
+              <Table.Cell>{ idx === 0 ? `$${order.price}` : '' }</Table.Cell>
+              <Table.Cell>${ specPrice }</Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{ item.name }</Table.Cell>
+              <Table.Cell>{ idx === 0 ? dayjs(order.createdAt).format('HH:mm:ss') : '' }</Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-blue-600 dark:text-blue-500">
+              { idx === 0 ? (<span onClick={() => detailModal.current.onOpen(order)}>詳細</span>) : '' }
+              </Table.Cell>
+            </Table.Row>
+          )
+        } else {
+          recordDiv.push(
+            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={`table_row_void_${order._id}_${idx}`}>
+              <Table.Cell className="font-bold">
+              <s>{ idx === 0 ? `${order.serial}` : '' }</s>
+              </Table.Cell>
+              <Table.Cell><s>{ idx === 0 ? `$${order.price}` : '' }</s></Table.Cell>
+              <Table.Cell><s>${ specPrice }</s></Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-gray-500 dark:text-white"><s>{ item.name }</s></Table.Cell>
+              <Table.Cell><s>{ idx === 0 ? dayjs(order.createdAt).format('HH:mm:ss') : '' }</s></Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-red-600 dark:text-red-500">
+              { idx === 0 ? (<span onClick={() => detailModal.current.onOpen(order)}>作廢</span>) : '' }
+              </Table.Cell>
+            </Table.Row>
+          )
+        }
       })
     })
   }
@@ -136,14 +154,17 @@ const DayReport = () => {
     status.perPrice = perPrice.toFixed(2)
   }
 
-  if (data) {
+  if (originData) {
     renderTable()
     renderChart()
     processStatus()
   }
 
+  const detailModal = useRef()
+
   return (
     <div className="px-4 pt-6 pb-2">
+      <ItemDetailModal ref={detailModal} />
       <div className="grid grid-cols-1 gap-4 mt-4 w-full md:grid-cols-3">
         <Card>
           <p>本日營收</p>
@@ -172,7 +193,7 @@ const DayReport = () => {
           </div>
         </Card>
       </div>
-      <div className="my-2 grid grid-cols-2 gap-2 w-full">
+      <div className="my-2 grid grid-cols-1 gap-2 md:grid-cols-2 w-full">
         <Card>
           <p>銷售分佈-圖表</p>
           <div>
