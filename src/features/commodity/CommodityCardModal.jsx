@@ -1,56 +1,60 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 // import PropTypes from 'prop-types'
-import { Modal, Button } from 'flowbite-react'
-import { useSelector, useDispatch } from 'react-redux'
-import { nanoid } from '@reduxjs/toolkit'
-import { getCommodityBySelected, selectCommodity } from './commoditySlice'
-import { insertToOrder } from './orderSlice'
-import _ from 'lodash'
+import { Modal, Button, Alert } from "flowbite-react";
+import { HiInformationCircle } from 'react-icons/hi'
+import { useSelector, useDispatch } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
+import { getCommodityBySelected, selectCommodity } from "./commoditySlice";
+import { insertToOrder } from "./orderSlice";
+import _ from "lodash";
 
 const CommodityCardModal = () => {
-  const dispatch = useDispatch()
-  const commodity = useSelector(getCommodityBySelected)
-  const [show, setShow] = useState(false)
-  const [order, setOrder] = useState({})
-  let specDiv = []
+  const dispatch = useDispatch();
+  const commodity = useSelector(getCommodityBySelected);
+  const [show, setShow] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertColumns, setAlertColumns] = useState([]);
+  const [order, setOrder] = useState({});
+  let specDiv = [];
 
   useEffect(() => {
     if (commodity) {
-      setShow(true)
-      setOrder({ ...commodity, specification: [], _id: nanoid() })
+      setShow(true);
+      setShowAlert(false);
+      setAlertColumns([]);
+      setOrder({ ...commodity, specification: [], _id: nanoid() });
     }
-  }, [commodity])
+  }, [commodity]);
 
   function removeFromOrderSpecification(payload) {
     // 移除所選的項目
-    const idx = order.specification.findIndex((el) => el.name === payload.name)
-    let splicedSpec = order.specification
-    splicedSpec.splice(idx, 1)
-    setOrder({ ...order, specification: splicedSpec })
+    const idx = order.specification.findIndex((el) => el.name === payload.name);
+    let splicedSpec = order.specification;
+    splicedSpec.splice(idx, 1);
+    setOrder({ ...order, specification: splicedSpec });
   }
 
   function insertToOrderSpecification(payload, type = null) {
     // 新增所選的項目
-    let specification = order.specification
-    if (type === 'single') {
+    let specification = order.specification;
+    if (type === "single") {
       // 若是單選
       // 先清空同個 category 下的項目
-      _.remove(specification, (n) => n.category === payload.category)
+      _.remove(specification, (n) => n.category === payload.category);
     }
-    specification.push(payload)
-    specification.sort((a, b) => a.index - b.index)
-    setOrder({ ...order, specification: specification })
+    specification.push(payload);
+    specification.sort((a, b) => a.index - b.index);
+    setOrder({ ...order, specification: specification });
   }
 
   // 建立訂單的規格
   if (commodity?.specification) {
-
     commodity.specification.forEach((item, idx) => {
-      const detailDiv = []
+      const detailDiv = [];
       if (item.value && item.type) {
         item.value.forEach((detail, detailIdx) => {
           switch (item.type) {
-            case 'single':
+            case "single":
               // 只能單選
               if (
                 order.specification &&
@@ -68,10 +72,10 @@ const CommodityCardModal = () => {
                       onClick={() => removeFromOrderSpecification(detail)}
                     >
                       {detail.name}
-                      {detail?.price ? `(+ $${detail.price})` : ''}
+                      {detail?.price ? `(+ $${detail.price})` : ""}
                     </Button>
                   </div>
-                )
+                );
               } else {
                 // 尚未被選取的按鈕
                 detailDiv.push(
@@ -84,20 +88,20 @@ const CommodityCardModal = () => {
                       onClick={() =>
                         insertToOrderSpecification(
                           { ...detail, category: item.name, index: idx },
-                          'single'
+                          "single"
                         )
                       }
                     >
                       <span className="relative px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                         {detail.name}
-                        {detail?.price ? `(+ $${detail.price})` : ''}
+                        {detail?.price ? `(+ $${detail.price})` : ""}
                       </span>
                     </button>
                   </div>
-                )
+                );
               }
-              break
-            case 'multi':
+              break;
+            case "multi":
               if (
                 order.specification &&
                 order.specification.some((el) => el.name === detail.name)
@@ -114,10 +118,10 @@ const CommodityCardModal = () => {
                       onClick={() => removeFromOrderSpecification(detail)}
                     >
                       {detail.name}
-                      {detail?.price ? `(+ $${detail.price})` : ''}
+                      {detail?.price ? `(+ $${detail.price})` : ""}
                     </Button>
                   </div>
-                )
+                );
               } else {
                 // 尚未被選取的按鈕
                 detailDiv.push(
@@ -137,15 +141,15 @@ const CommodityCardModal = () => {
                     >
                       <span className="relative px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                         {detail.name}
-                        {detail?.price ? `(+ $${detail.price})` : ''}
+                        {detail?.price ? `(+ $${detail.price})` : ""}
                       </span>
                     </button>
                   </div>
-                )
+                );
               }
-              break
+              break;
           }
-        })
+        });
       }
       specDiv.push(
         <div key={`spec_item_${item.name}_${idx}`}>
@@ -154,22 +158,46 @@ const CommodityCardModal = () => {
           </p>
           {detailDiv}
         </div>
-      )
-    })
+      );
+    });
   } else {
-    specDiv = (<span className='text-gray-600'>無設定規格</span>)
+    specDiv = <span className="text-gray-600">無設定規格</span>;
   }
 
   // 取消及右上打叉按鈕：關閉 Modal
   function onClose() {
-    dispatch(selectCommodity(null))
-    setShow(false)
+    dispatch(selectCommodity(null));
+    setShow(false);
   }
 
   // 加入訂單按鈕：將訂單新增至 redux
   function insertToOrderEvent() {
-    dispatch(insertToOrder(order))
-    onClose()
+    // console.log(commodity.specification, order.specification);
+    // 檢查是否有必填
+    new Promise((resolve, reject) => {
+      if (!commodity.specification) resolve()
+      const columns = []
+      commodity.specification.forEach((spec) => {
+        if (spec.required) {
+          const idx = order.specification.findIndex(
+            (el) => el.category === spec.name
+          );
+          if (idx === -1) columns.push(spec.name)
+        }
+      });
+      if (columns.length > 0) reject(columns)
+      resolve();
+    })
+      .then(() => {
+        // 送出
+        dispatch(insertToOrder(order));
+        onClose();
+      })
+      .catch(cols => {
+        // 失敗
+        setAlertColumns(cols)
+        setShowAlert(true)
+      });
   }
 
   return (
@@ -178,6 +206,11 @@ const CommodityCardModal = () => {
         <Modal.Header>{commodity?.name}</Modal.Header>
         <Modal.Body>
           <div className="space-y-2">{specDiv}</div>
+          { showAlert ? (<Alert color="red" icon={HiInformationCircle}>
+            <span>
+              <span className="font-medium">注意!</span> [{ alertColumns.toString() }]欄位尚未填寫
+            </span>
+          </Alert>) : '' }
         </Modal.Body>
         <Modal.Footer>
           <Button className="w-24" onClick={insertToOrderEvent}>
@@ -189,9 +222,9 @@ const CommodityCardModal = () => {
         </Modal.Footer>
       </Modal>
     </React.Fragment>
-  )
-}
+  );
+};
 
 // CommodityCardModal.propTypes = {}
 
-export default CommodityCardModal
+export default CommodityCardModal;

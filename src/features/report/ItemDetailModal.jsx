@@ -82,13 +82,13 @@ const ItemDetailModal = forwardRef((props, ref) => {
   return (
     <React.Fragment>
       <Modal show={show} onClose={onClose}>
-        <Modal.Header>訂單詳細 { `#${order.serial}` }</Modal.Header>
+        <Modal.Header>訂單詳細 { `#${order.serial}` } - { dayjs(order.createdAt).format('YYYY/MM/DD HH:mm:ss') }</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <p>時間日期: { dayjs(order.createdAt).format('YYYY/MM/DD HH:mm:ss') }</p>
+            {/* <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <p>時間日期: </p>
               <p className="sm:text-right">ID: { order._id }</p>
-            </div>
+            </div> */}
             <Table>
               <Table.Head>
                 <Table.HeadCell>品項</Table.HeadCell>

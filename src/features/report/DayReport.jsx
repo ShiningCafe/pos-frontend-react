@@ -151,7 +151,7 @@ const DayReport = () => {
     status.totalIncome = data.reduce((sum, c) => sum + c.price, 0)
     status.totalOrder = data.length
     let perPrice = status.totalIncome / status.totalOrder
-    status.perPrice = perPrice.toFixed(2)
+    status.perPrice = perPrice > 0 ? perPrice.toFixed(2) : 0
   }
 
   if (originData) {

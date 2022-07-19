@@ -14,6 +14,7 @@ function TestPage() {
           {
             name: '甜度',
             type: 'single',
+            required: true,
             value: [
               { name: '正常甜' },
               { name: '半糖' },
@@ -24,6 +25,7 @@ function TestPage() {
           {
             name: '冰塊',
             type: 'single',
+            required: true,
             value: [
               { name: '正常冰' },
               { name: '少冰' },
