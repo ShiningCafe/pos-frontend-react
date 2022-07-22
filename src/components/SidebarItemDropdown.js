@@ -51,7 +51,7 @@ const SidebarItemDropdown = (props) => {
         onClick={toggleButton}
         className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
       >
-        <DynamicHeroIcon icon="DocumentReportIcon"></DynamicHeroIcon>
+        <DynamicHeroIcon icon={props.icon}></DynamicHeroIcon>
         <span
           className="flex-1 ml-3 text-left whitespace-nowrap"
           sidebar-toggle-item="true"
@@ -82,6 +82,7 @@ SidebarItemDropdown.propTypes = {
   label: PropTypes.string,
   path: PropTypes.string,
   child: PropTypes.array,
+  icon: PropTypes.string,
 }
 
 export default SidebarItemDropdown

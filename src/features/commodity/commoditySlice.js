@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit'
 import _ from 'lodash'
 import { db } from '../../app/db'
 
@@ -23,6 +23,17 @@ export const commoditySlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getCommoditiesFromIndexedDB.fulfilled, (state, action) => {
       state.commodities = action.payload
+    }),
+    builder.addCase(createCommodityToIndexedDB.fulfilled, (state, action) => {
+      state.commodities.push(action.payload)
+    }),
+    builder.addCase(updateCommodityToIndexedDB.fulfilled, (state, action) => {
+      let data = [...current(state.commodities)]
+      const idx = data.findIndex(e => e._id === action.payload._id)
+      if (idx > -1) {
+        data[idx] = action.payload
+        state.commodities = data
+      }
     })
   }
 })
@@ -53,6 +64,20 @@ export const getCategories = (state) => {
 export const getCommoditiesFromIndexedDB = createAsyncThunk('commoditiy/get',
   async () => {
     return await db.commodities.toArray()
+  }
+)
+export const createCommodityToIndexedDB = createAsyncThunk('commodity/post',
+  async (data) => {
+    await db.commodities.add(data)
+    return data
+  }
+)
+export const updateCommodityToIndexedDB = createAsyncThunk('commodity/update',
+  async (data) => {
+    const storeData = _.cloneDeep(data)
+    delete data._id
+    await db.commodities.update(storeData._id, data)
+    return storeData
   }
 )
 // export const getCategory = (state) => state.commodity.category

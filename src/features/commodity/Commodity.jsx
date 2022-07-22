@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CommodityCard from './CommodityCard'
 import CommodityCategoryBar from './CommodityCategoryBar'
 import CommodityCardModal from './CommodityCardModal'
 
-import { useSelector } from 'react-redux'
-import { getCommoditiesByCategory } from './commoditySlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCommoditiesByCategory, getCommoditiesFromIndexedDB } from './commoditySlice'
 
 const Commodity = () => {
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getCommoditiesFromIndexedDB())
+  }, [])
 
   const selectedCommodities = useSelector(getCommoditiesByCategory)
   let selectedCommodityDiv

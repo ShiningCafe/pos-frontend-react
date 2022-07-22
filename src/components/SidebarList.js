@@ -8,7 +8,7 @@ const SidebarList = [
   {
     title: '商品',
     icon: 'ViewGridAddIcon',
-    label: '99+',
+    // label: '99+',
     path: '/commodity',
   },
   {
@@ -23,6 +23,16 @@ const SidebarList = [
         title: '月報表',
         path: '/month-report',
       },
+    ]
+  },
+  {
+    title: '設定',
+    icon: 'CogIcon',
+    child: [
+      {
+        title: '商品設定',
+        path: '/setting/commodity'
+      }
     ]
   }
 ]

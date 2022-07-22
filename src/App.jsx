@@ -4,6 +4,7 @@ import TestPage from './pages/test'
 import Commodity from './features/commodity/Commodity'
 import DayReport from './features/report/DayReport'
 import MonthReport from './features/report/MonthReport'
+import SettingCommodity from './features/setting/SettingCommodity'
 //
 // redux
 //
@@ -24,6 +25,7 @@ function App() {
         <Route path="/commodity" element={<Commodity />}></Route>
         <Route path="/day-report" element={<DayReport />}></Route>
         <Route path="/month-report" element={<MonthReport />}></Route>
+        <Route path="/setting/commodity" element={<SettingCommodity />}></Route>
       </Route>
     </Routes>
   )
