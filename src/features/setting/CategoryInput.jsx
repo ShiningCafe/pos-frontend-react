@@ -58,7 +58,7 @@ const CategoryInput = forwardRef((props, ref) => {
 
   return (
     <div>
-      <div className="grid grid-cols-6 gap-3 mb-4">
+      <div className="inline-flex flex-wrap gap-3 mb-4">
         {categories.map((item) => {
           return (
             <div className="flex" key={`checkbox_${item}`}>
@@ -76,7 +76,10 @@ const CategoryInput = forwardRef((props, ref) => {
           );
         })}
       </div>
-      <TextInput onKeyDown={insertCategory} placeholder="要新增類別的話，在此輸入"/>
+      {
+        props.edit ? (<TextInput onKeyDown={insertCategory} placeholder="要新增類別的話，在此輸入"/>) : ''
+      }
+      
     </div>
 
   );
@@ -84,6 +87,7 @@ const CategoryInput = forwardRef((props, ref) => {
 
 CategoryInput.propTypes = {
   changeHandler: propTypes.func,
+  edit: propTypes.bool
 };
 CategoryInput.displayName = 'CategoryInput'
 export default CategoryInput;

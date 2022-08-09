@@ -34,6 +34,14 @@ export const commoditySlice = createSlice({
         data[idx] = action.payload
         state.commodities = data
       }
+    }),
+    builder.addCase(deleteCommodityToIndexedDB.fulfilled, (state, action) => {
+      let data = [...current(state.commodities)]
+      const idx = data.findIndex(e => e._id === action.payload)
+      if (idx > -1) {
+        data.splice(idx, 1)
+        state.commodities = data
+      }
     })
   }
 })
@@ -80,6 +88,13 @@ export const updateCommodityToIndexedDB = createAsyncThunk('commodity/update',
     return storeData
   }
 )
+export const deleteCommodityToIndexedDB = createAsyncThunk('commodity/delete',
+  async (data) => {
+    await db.commodities.delete(data._id)
+    return data._id
+  }
+)
+
 // export const getCategory = (state) => state.commodity.category
 
 export const { selectCategory, selectCommodity } = commoditySlice.actions

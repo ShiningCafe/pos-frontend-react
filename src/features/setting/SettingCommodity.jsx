@@ -55,7 +55,7 @@ const SettingCommodity = () => {
             {el.price}
           </Table.Cell>
           <Table.Cell className="font-medium text-blue-600 dark:text-blue-500">
-            <span onClick={() => detailModal.current.open(el)}>詳細</span>
+            <span onClick={() => detailModal.current.open(el)}>編輯</span>
           </Table.Cell>
         </Table.Row>
       );
