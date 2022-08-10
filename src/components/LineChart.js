@@ -30,9 +30,9 @@ const LineChart = (props) => {
   const options = {
     ...props.options,
     responsive: true,
-    lineTension: 0.3
+    lineTension: 0.1,
   }
-  return <Line data={props.data} options={options} height={60}/>
+  return <Line data={props.data} options={options} height={80}/>
 }
 
 LineChart.propTypes = {

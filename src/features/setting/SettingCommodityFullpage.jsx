@@ -172,8 +172,8 @@ const SettingCommodityFullpage = () => {
     <div className="px-4 pt-6 pb-2">
       <div className="w-full text-right">
         <div className="inline-flex gap-2">
-          <Button onClick={deleteCommodity} className="bg-red-100 text-red-600 hover:bg-red-100">刪除商品</Button>
-          <Button onClick={cloneCommodity} className="bg-blue-100 text-blue-600 hover:bg-blue-100">複製成新商品</Button>
+          <Button onClick={deleteCommodity} className="bg-red-200 text-red-600 hover:bg-red-100">刪除商品</Button>
+          <Button onClick={cloneCommodity} className="bg-blue-200 text-blue-600 hover:bg-blue-100">複製成新商品</Button>
           <Button onClick={submitCommodity}>儲存商品</Button>
           <Button onClick={() => navigate('/setting/commodity')} color="light">返回列表</Button>
         </div>

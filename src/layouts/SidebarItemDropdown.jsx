@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import DynamicHeroIcon from './DynamicHeroIcon'
+import DynamicHeroIcon from '../components/DynamicHeroIcon'
 
 const SidebarItemDropdown = (props) => {
   const location = useLocation()

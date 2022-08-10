@@ -97,25 +97,25 @@ const DayReport = () => {
         {
           data: totalPricePerHour,
           label: '營業額',
-          borderColor: '#3e95cd',
-          backgroundColor: '#3e95cd66',
+          borderColor: 'rgb(54, 162, 235)',
+          backgroundColor: 'rgb(54, 162, 235)',
           datalabels: {
             render: 'label',
             align: 'top',
-            color: '#36A2EB',
+            color: 'rgb(54, 162, 235)',
           },
           yAxisID: 'y_price',
         },
         {
           data: totalOrderPerHour,
           label: '單量',
-          borderColor: "#3cba9f",
-          backgroundColor: '#3cba9f66',
-          fill: true,
+          borderColor: "rgb(255, 99, 132)",
+          backgroundColor: 'rgb(255, 99, 132)',
+          // fill: true,
           datalabels: {
             render: 'label',
             align: 'top',
-            color: '#3cba9f',
+            color: 'rgb(255, 99, 132)',
           },
           yAxisID: 'y_orders',
         }
