@@ -19,6 +19,7 @@ import Card from "../../components/ui/Card";
 import ToggleButton from "../../components/ui/ToggleButton";
 import CategoryInput from "./CategoryInput";
 import SpecCommonSaveModal from "./SpecCommonSaveModal";
+import NewButton from "../../components/ui/Button";
 
 const SettingCommodityFullpage = () => {
   const { id } = useParams();
@@ -172,10 +173,10 @@ const SettingCommodityFullpage = () => {
     <div className="px-4 pt-6 pb-2">
       <div className="w-full text-right">
         <div className="inline-flex gap-2">
-          <Button onClick={deleteCommodity} className="bg-red-200 text-red-600 hover:bg-red-100">刪除商品</Button>
-          <Button onClick={cloneCommodity} className="bg-blue-200 text-blue-600 hover:bg-blue-100">複製成新商品</Button>
-          <Button onClick={submitCommodity}>儲存商品</Button>
-          <Button onClick={() => navigate('/setting/commodity')} color="light">返回列表</Button>
+          <NewButton onClick={deleteCommodity} className="bg-red-200 text-red-600 hover:bg-red-100">刪除商品</NewButton>
+          <NewButton onClick={cloneCommodity} className="bg-blue-200 text-blue-600 hover:bg-blue-100">複製成新商品</NewButton>
+          <NewButton onClick={submitCommodity}>儲存商品</NewButton>
+          <NewButton onClick={() => navigate('/setting/commodity')} color="light">返回列表</NewButton>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
