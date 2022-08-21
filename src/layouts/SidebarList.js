@@ -19,10 +19,10 @@ const SidebarList = [
         title: '日報表',
         path: '/day-report',
       },
-      // {
-      //   title: '月報表',
-      //   path: '/month-report',
-      // },
+      {
+        title: '月報表',
+        path: '/month-report',
+      },
     ]
   },
   {

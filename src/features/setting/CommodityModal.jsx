@@ -16,6 +16,7 @@ import {
   updateCommodityToIndexedDB,
   // deleteCommodityToIndexedDB,
 } from "../commodity/commoditySlice";
+import { activeNotify } from "../../layouts/notifySlice";
 // Component
 import CategoryInput from "./CategoryInput";
 
@@ -69,11 +70,13 @@ const CommodityModal = forwardRef((props, ref) => {
       const datetime = new Date();
       data.createdAt = Math.floor(datetime / 1000);
       dispatch(createCommodityToIndexedDB(data)).then(() => {
+        dispatch(activeNotify({ type: 'success', message: '商品已新建'}))
         close();
       });
     } else {
       console.log("data", data);
       dispatch(updateCommodityToIndexedDB(data)).then(() => {
+        dispatch(activeNotify({ type: 'success', message: '資料已儲存'}))
         close();
       });
     }

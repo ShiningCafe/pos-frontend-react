@@ -7,15 +7,19 @@ import { Modal, TextInput, Button } from "flowbite-react";
 import { useEffect } from "react";
 import { HiX } from 'react-icons/hi'
 import propTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { activeNotify } from '../../layouts/notifySlice'
 
 const SpecCommonSaveModal = forwardRef((props, ref) => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false)
   const [name, setName] = useState('')
   const [existData, setExistData] = useState([])
   const [data, setData] = useState([])
 
   useEffect(() => {
-    setExistData(JSON.parse(localStorage.getItem('specCommon')))
+    const d = JSON.parse(localStorage.getItem('specCommon'))
+    if (d) setExistData(d)
   }, [])
 
   useImperativeHandle(ref, () => ({
@@ -35,6 +39,7 @@ const SpecCommonSaveModal = forwardRef((props, ref) => {
     if (existData) newData = existData
     newData.push({ name: name, spec: data })
     localStorage.setItem('specCommon', JSON.stringify(newData))
+    dispatch(activeNotify({ type: 'success', message: '資料已儲存'}))
     close()
   }
 

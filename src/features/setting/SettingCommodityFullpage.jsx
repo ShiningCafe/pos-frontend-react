@@ -12,6 +12,7 @@ import {
   updateCommodityToIndexedDB,
   deleteCommodityToIndexedDB,
 } from "../commodity/commoditySlice";
+import { activeNotify } from "../../layouts/notifySlice";
 // UI element
 import { TextInput, Button, ToggleSwitch, ListGroup } from "flowbite-react";
 import { HiPlus, HiChevronUp, HiChevronDown } from 'react-icons/hi'
@@ -113,11 +114,13 @@ const SettingCommodityFullpage = () => {
     const data = {...commodity}
     data.price = parseInt(data.price)
     dispatch(updateCommodityToIndexedDB(data))
+    dispatch(activeNotify({ type: 'success', message: '資料已儲存'}))
   }
 
   function deleteCommodity () {
     dispatch(deleteCommodityToIndexedDB(commodity)).then(() => {
       navigate('/setting/commodity')
+      dispatch(activeNotify({ type: 'success', message: '商品已刪除'}))
     })
   }
 
@@ -133,6 +136,7 @@ const SettingCommodityFullpage = () => {
     dispatch(createCommodityToIndexedDB(data)).then(() => {
       navigate(`/setting/commodity/${data._id}`)
       setCommodity(data)
+      dispatch(activeNotify({ type: 'success', message: '商品複製成功'}))
     });
   }
 

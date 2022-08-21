@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button, Modal, Table } from 'flowbite-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrder, dumpOrder, spliceOrder, checkoutOrder } from './orderSlice'
+import { activeNotify } from '../../layouts/notifySlice'
 
 const CommodityOrderCheck = () => {
   const dispatch = useDispatch()
@@ -83,6 +84,7 @@ const CommodityOrderCheck = () => {
 
   function checkout() {
     dispatch(checkoutOrder())
+    dispatch(activeNotify({ type: 'success', message: '結帳完成'}))
     onClose()
   }
 
@@ -98,19 +100,21 @@ const CommodityOrderCheck = () => {
         <Modal.Header>結帳</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            <Table>
-              <Table.Head>
-                <Table.HeadCell>品項</Table.HeadCell>
-                <Table.HeadCell>規格</Table.HeadCell>
-                <Table.HeadCell>價格</Table.HeadCell>
-                <Table.HeadCell>
-                  <span className="sr-only">修改</span>
-                </Table.HeadCell>
-              </Table.Head>
-              <Table.Body className="divide-y">
-                {tableRowDiv}
-              </Table.Body>
-            </Table>
+            <div className="max-h-96 overflow-y-auto">
+              <Table>
+                <Table.Head>
+                  <Table.HeadCell>品項</Table.HeadCell>
+                  <Table.HeadCell>規格</Table.HeadCell>
+                  <Table.HeadCell>價格</Table.HeadCell>
+                  <Table.HeadCell>
+                    <span className="sr-only">修改</span>
+                  </Table.HeadCell>
+                </Table.Head>
+                <Table.Body className="divide-y">
+                  {tableRowDiv}
+                </Table.Body>
+              </Table>
+            </div>
             <p className="text-right text-lg">共 {order.length} 件，總計 $ <b>{totalPrice}</b></p>
           </div>
         </Modal.Body>

@@ -1,6 +1,9 @@
 import { Button } from 'flowbite-react'
+import { useDispatch } from 'react-redux'
 import { db } from '../app/db'
+import { activeNotify } from '../layouts/notifySlice';
 function TestPage() {
+  const dispatch = useDispatch();
   //
   async function initDB () {
     await db.commodities.clear()
@@ -96,9 +99,14 @@ function TestPage() {
     console.log('add complete')
   }
 
+  function notifyTest () {
+    dispatch(activeNotify({ type: 'warning', message: '資料已儲存'}))
+  }
+
   return (
     <div className="px-4 pt-6 pb-2">
       <Button onClick={initDB}>INIT Commodities</Button>
+      <Button onClick={notifyTest}>Notify TEST</Button>
     </div>
   )
 }

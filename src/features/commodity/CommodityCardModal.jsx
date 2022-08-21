@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import PropTypes from 'prop-types'
 import { Modal, Button, Alert } from "flowbite-react";
-import { HiInformationCircle } from 'react-icons/hi'
+import { HiInformationCircle, HiPlus, HiMinus } from 'react-icons/hi'
 import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { getCommodityBySelected, selectCommodity } from "./commoditySlice";
@@ -15,6 +15,7 @@ const CommodityCardModal = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertColumns, setAlertColumns] = useState([]);
   const [order, setOrder] = useState({});
+  const [amount, setAmount] = useState(1);
   let specDiv = [];
 
   useEffect(() => {
@@ -22,7 +23,8 @@ const CommodityCardModal = () => {
       setShow(true);
       setShowAlert(false);
       setAlertColumns([]);
-      setOrder({ ...commodity, specification: [], _id: nanoid() });
+      setAmount(1);
+      setOrder({ ...commodity, specification: [], _id: null });
     }
   }, [commodity]);
 
@@ -161,8 +163,25 @@ const CommodityCardModal = () => {
       );
     });
   } else {
-    specDiv = <span className="text-gray-600">無設定規格</span>;
+    specDiv.push(<span className="text-gray-600" key="spec_item_none">無設定規格</span>);
   }
+  // 設定數量
+  specDiv.push(
+    <div key="spec_item_amount">
+      <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        數量
+      </p>
+      <div className="inline-flex gap-4 mt-2">
+        <Button gradientDuoTone="purpleToBlue" size="xs" onClick={() => { amount > 1 ? setAmount(amount - 1) : '' }}>
+          <HiMinus className="h-4" />
+        </Button>
+        <span className="self-center text-lg">{amount}</span>
+        <Button gradientDuoTone="purpleToBlue" size="xs" onClick={() => setAmount(amount + 1)}>
+          <HiPlus className="h-4" />
+        </Button>
+      </div>
+    </div>
+  )
 
   // 取消及右上打叉按鈕：關閉 Modal
   function onClose() {
@@ -190,7 +209,11 @@ const CommodityCardModal = () => {
     })
       .then(() => {
         // 送出
-        dispatch(insertToOrder(order));
+        if (amount < 1) return false;
+        for (let i = 1; i <= amount; i++) {
+          const orderWithId = { ...order, _id: nanoid() }
+          dispatch(insertToOrder(orderWithId));
+        }
         onClose();
       })
       .catch(cols => {
@@ -205,7 +228,7 @@ const CommodityCardModal = () => {
       <Modal show={show} onClose={onClose}>
         <Modal.Header>{commodity?.name}</Modal.Header>
         <Modal.Body>
-          <div className="space-y-2">{specDiv}</div>
+          <div className="space-y-2 mb-2">{specDiv}</div>
           { showAlert ? (<Alert color="red" icon={HiInformationCircle}>
             <span>
               <span className="font-medium">注意!</span> [{ alertColumns.toString() }]欄位尚未填寫
