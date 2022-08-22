@@ -4,13 +4,14 @@ import CommodityCategoryBar from './CommodityCategoryBar'
 import CommodityCardModal from './CommodityCardModal'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getCommoditiesByCategory, getCommoditiesFromIndexedDB } from './commoditySlice'
+import { getCommoditiesByCategory, getCommoditiesFromIndexedDB, selectCategory } from './commoditySlice'
 
 const Commodity = () => {
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getCommoditiesFromIndexedDB())
+    dispatch(selectCategory('全部'))
   }, [])
 
   const selectedCommodities = useSelector(getCommoditiesByCategory)

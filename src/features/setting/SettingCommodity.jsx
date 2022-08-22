@@ -45,16 +45,16 @@ const SettingCommodity = () => {
           className="bg-white dark:border-gray-700 dark:bg-gray-800"
           key={`table_row_${el._id}`}
         >
-          <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+          <Table.Cell className="max-w-xs whitespace-nowrap truncate font-medium text-gray-900 dark:text-white">
             {el.name}
           </Table.Cell>
           <Table.Cell>
-            <div className="flex flex-wrap gap-1">{badgeDiv}</div>
+            <div className="whitespace-nowrap flex flex-wrap gap-1">{badgeDiv}</div>
           </Table.Cell>
-          <Table.Cell className="font-medium text-gray-900 dark:text-blue-500">
+          <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-blue-500">
             {el.price}
           </Table.Cell>
-          <Table.Cell className="font-medium text-blue-600 dark:text-blue-500">
+          <Table.Cell className="whitespace-nowrap font-medium text-blue-600 dark:text-blue-500">
             <span onClick={() => detailModal.current.open(el)}>編輯</span>
           </Table.Cell>
         </Table.Row>
@@ -86,9 +86,9 @@ const SettingCommodity = () => {
     <div className="px-4 pt-6 pb-2">
       <CommodityModal ref={detailModal} />
       <Card>
-        <div className="flex justify-between">
+        <div className="md:flex justify-between">
           <div>
-            <p>商品設定</p>
+            <p className="my-4">商品設定</p>
           </div>
           <div className="inline-flex gap-2">
             <Select id="countries"className="w-36" onChange={e => setSelectedCategory(e.target.value)}>

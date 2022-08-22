@@ -5,11 +5,14 @@ import SidebarLayout from './SidebarLayout'
 import NavbarLayout from './NavbarLayout'
 import ToastPop from './ToastPop'
 import CommodityOrderCheck from '../features/commodity/CommodityOrderCheck'
+//
+import FirstModal from './FirstModal'
 
 
 const Layout = () => {
   return (
     <React.Fragment>
+      <FirstModal />
       <CommodityOrderCheck />
       <ToastPop />
       <NavbarLayout />

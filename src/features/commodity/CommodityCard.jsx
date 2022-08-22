@@ -2,10 +2,26 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { selectCommodity } from './commoditySlice'
+import { useEffect } from 'react'
+import { useState } from 'react'
 
 const CommodityCard = (props) => {
   const dispatch = useDispatch()
   function onClick (item) { dispatch(selectCommodity(item))}
+
+  const [textSize, setTextSize] = useState('text-xl')
+  const [text, setText] = useState('')
+  useEffect(() => {
+    if (!props.item.name) return false
+    setText(props.item.name)
+    const size = props.item.name.length
+    if (size > 12) setTextSize('text-lg')
+    if (size > 16) setTextSize('text-base')
+    if (size > 28) {
+      setTextSize('text-sm')
+      setText(props.item.name.substr(0, 28) + '...')
+    }
+  }, [props])
 
   return (
     <div
@@ -17,8 +33,8 @@ const CommodityCard = (props) => {
       </a> */}
       <div className="p-5">
         <a href="#">
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {props.item.name}
+          <h5 className={textSize + " mb-2 font-bold tracking-tight text-gray-900 dark:text-white"}>
+            {text}
           </h5>
         </a>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
