@@ -354,11 +354,11 @@ const FirstModal = () => {
             type: "single",
             value: [
               {
-                name: "L",
+                name: "X",
                 price: null,
               },
               {
-                name: "X",
+                name: "L",
                 price: null,
               },
               {
