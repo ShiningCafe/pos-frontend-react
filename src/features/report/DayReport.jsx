@@ -43,8 +43,8 @@ const DayReport = () => {
               <Table.Cell className="font-bold">
               { idx === 0 ? `${order.serial}` : '' }
               </Table.Cell>
-              <Table.Cell>{ idx === 0 ? `$${order.price}` : '' }</Table.Cell>
-              <Table.Cell>${ specPrice }</Table.Cell>
+              <Table.Cell>{ idx === 0 ? `$${order.price.currency()}` : '' }</Table.Cell>
+              <Table.Cell>${ specPrice.currency() }</Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{ item.name }</Table.Cell>
               <Table.Cell>{ idx === 0 ? dayjs(order.createdAt).format('HH:mm:ss') : '' }</Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-blue-600 dark:text-blue-500">
@@ -169,7 +169,7 @@ const DayReport = () => {
         <Card>
           <p>本日營收</p>
           <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
-            ${status.totalIncome}
+            ${status.totalIncome.currency()}
           </span>
         </Card>
         <Card>
@@ -181,7 +181,7 @@ const DayReport = () => {
         <Card>
           <p>客單價</p>
           <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
-          {status.perPrice}
+          {status.perPrice.currency()}
           </span>
         </Card>
       </div>

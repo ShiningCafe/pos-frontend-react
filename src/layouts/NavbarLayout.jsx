@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import logoPng from '../images/logo.png'
 // import userPng from '../images/user.png'
 // import LayoutDropdown from './LayoutDropdown';
+import { Badge } from 'flowbite-react'
+import { Offline, Online } from "react-detect-offline";
 
 function NavbarLayout () {
   
@@ -204,6 +206,8 @@ function NavbarLayout () {
           </div>
           <div className="flex items-center">
             {/*  */}
+            <Online><Badge color="green">網路:正常</Badge></Online>
+            <Offline><Badge color="red">無網路</Badge></Offline>
           </div>
         </div>
       </div>

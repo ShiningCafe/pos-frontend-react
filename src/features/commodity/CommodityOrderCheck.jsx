@@ -30,7 +30,7 @@ const CommodityOrderCheck = () => {
         gradientDuoTone="pinkToOrange"
         className="fixed bottom-0 right-0 mx-2 mb-6 z-50"
       >
-        結帳 ${totalPrice}
+        結帳 ${totalPrice ? totalPrice.currency() : 0}
       </Button>
     )
     tableRowDiv = order.map((item) => {
@@ -38,7 +38,7 @@ const CommodityOrderCheck = () => {
       let textSpecList = ''
       item.specification.forEach(e => {
         if (e.price) {
-          textSpecList += ` ${e.name}+$${e.price}`
+          textSpecList += ` ${e.name}+$${e.price.currency()}`
         } else {
           textSpecList += ` ${e.name}`
         }
@@ -56,8 +56,8 @@ const CommodityOrderCheck = () => {
             {item.name}
           </Table.Cell>
           <Table.Cell>{textSpecList}</Table.Cell>
-          <Table.Cell>${textPriceWithSpec}</Table.Cell>
-          <Table.Cell>
+          <Table.Cell>${textPriceWithSpec.currency()}</Table.Cell>
+          <Table.Cell className="whitespace-nowrap">
             <a
               onClick={() => removeFromOrderById(item._id)}
               className="font-medium text-blue-600 hover:underline dark:text-blue-500"
@@ -83,6 +83,8 @@ const CommodityOrderCheck = () => {
   }
 
   function checkout() {
+    // 防止建立空的訂單
+    if (order.length <= 0) return false
     dispatch(checkoutOrder())
     dispatch(activeNotify({ type: 'success', message: '結帳完成'}))
     onClose()
@@ -115,12 +117,12 @@ const CommodityOrderCheck = () => {
                 </Table.Body>
               </Table>
             </div>
-            <p className="text-right text-lg">共 {order.length} 件，總計 $ <b>{totalPrice}</b></p>
+            <p className="text-right text-lg">共 {order.length} 件，總計 $ <b>{totalPrice ? totalPrice.currency() : 0}</b></p>
           </div>
         </Modal.Body>
         <Modal.Footer className="flex justify-between">
           <div className="inline-flex">
-            <Button className="w-24" onClick={checkout}>
+            <Button className="w-24" onClick={checkout} disabled={order.length <= 0}>
               結帳
             </Button>
             <Button className="w-24" color="gray" onClick={onClose}>

@@ -52,7 +52,7 @@ const SettingCommodity = () => {
             <div className="whitespace-nowrap flex flex-wrap gap-1">{badgeDiv}</div>
           </Table.Cell>
           <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-blue-500">
-            {el.price}
+            {el.price.currency()}
           </Table.Cell>
           <Table.Cell className="whitespace-nowrap font-medium text-blue-600 dark:text-blue-500">
             <span onClick={() => detailModal.current.open(el)}>編輯</span>

@@ -11,8 +11,8 @@ const MonthReport = () => {
   // 從資料庫撈資料  
   //
   const originData = useLiveQuery(async () => {
-    const startDate = dayjs().format('YYYY/MM') + '/01'
-    const endDate = dayjs().format('YYYY/MM') + '/' + dayjs().daysInMonth()
+    const startDate = dayjs('2022/08/01').format('YYYY/MM') + '/01'
+    const endDate = dayjs('2022/08/01').format('YYYY/MM') + '/' + dayjs().daysInMonth()
     return await db.orders.where('createdAt').between(new Date(`${startDate} 00:00:00`), new Date(`${endDate} 23:59:59`)).toArray();
   })
   const data = originData ? originData.filter(el => el.voidedAt === null) : []
@@ -35,6 +35,7 @@ const MonthReport = () => {
 
   if (data) {
     processStatus()
+    console.log(status.perPrice)
   }
 
   return (
@@ -43,7 +44,7 @@ const MonthReport = () => {
         <Card>
           <p>本月營收</p>
           <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
-            ${status.totalIncome}
+            ${status.totalIncome.currency()}
           </span>
         </Card>
         <Card>
@@ -55,7 +56,7 @@ const MonthReport = () => {
         <Card>
           <p>月平均客單價</p>
           <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
-          {status.perPrice}
+          {status.perPrice.currency()}
           </span>
         </Card>
       </div>

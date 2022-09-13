@@ -15,6 +15,22 @@ import { Provider } from 'react-redux'
 // flowbite CSS Style 
 import 'flowbite'
 
+// currency
+if (!Number.prototype.currency) {
+  Number.prototype.currency = function () {
+      var parts = this.toString().split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return parts.join('.');
+  };
+}
+if (!String.prototype.currency) {
+  String.prototype.currency = function () {
+      var parts = this.split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return parts.join('.');
+  };
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
