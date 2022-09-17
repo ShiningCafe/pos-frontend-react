@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import ScrollToTop from '../components/ScrollToTop'
 
 import SidebarLayout from './SidebarLayout'
 import NavbarLayout from './NavbarLayout'
@@ -12,6 +13,7 @@ import FirstModal from './FirstModal'
 const Layout = () => {
   return (
     <React.Fragment>
+      <ScrollToTop/>
       <FirstModal />
       <CommodityOrderCheck />
       <ToastPop />

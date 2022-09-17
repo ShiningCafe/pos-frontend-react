@@ -15,7 +15,7 @@ const Dashboard = () => {
           {/* <div className="my-3">您好，歡迎使用🎉</div>
           <Button className="bg-violet-600 text-white font-bold hover:bg-violet-100">建立範本</Button> */}
         </Card>
-        <Card className="grid"><div className="place-self-center font-bold text-lg text-gray-500">版本 v0.1.0822</div></Card>
+        <Card className="grid"><div className="place-self-center font-bold text-lg text-gray-500">版本 v0.1.0917</div></Card>
         {/*  */}
 
       </div>

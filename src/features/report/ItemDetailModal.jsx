@@ -22,7 +22,7 @@ const ItemDetailModal = forwardRef((props, ref) => {
       let textSpecList = "";
       item.specification.forEach((e) => {
         if (e.price) {
-          textSpecList += ` ${e.name}+$${e.price}`;
+          textSpecList += ` ${e.name}+$${e.price.currency()}`;
         } else {
           textSpecList += ` ${e.name}`;
         }
@@ -45,7 +45,7 @@ const ItemDetailModal = forwardRef((props, ref) => {
             {item.name}
           </Table.Cell>
           <Table.Cell>{textSpecList}</Table.Cell>
-          <Table.Cell>${textPriceWithSpec}</Table.Cell>
+          <Table.Cell>${textPriceWithSpec.currency()}</Table.Cell>
         </Table.Row>
       );
     });
@@ -99,7 +99,7 @@ const ItemDetailModal = forwardRef((props, ref) => {
             </Table>
             <p className="text-right text-lg">
               共 {order?.contents ? order.contents.length : 0} 件，總計 ${" "}
-              <b>{order.price}</b>
+              <b>{order.price ? order.price.currency() : 0}</b>
             </p>
           </div>
         </Modal.Body>
