@@ -3,8 +3,9 @@ import { useEffect } from 'react';
 import logoPng from '../images/logo.png'
 // import userPng from '../images/user.png'
 // import LayoutDropdown from './LayoutDropdown';
-import { Badge } from 'flowbite-react'
+import { Badge, Button } from 'flowbite-react'
 import { Offline, Online } from "react-detect-offline";
+import { useState } from 'react';
 
 function NavbarLayout () {
   
@@ -178,6 +179,35 @@ function NavbarLayout () {
 
   // }
 
+  //
+  // servicew-worker 更新頁面按鈕
+  //
+  const [canUpdate, setCanUpdate] = useState(false)
+  const updateButtonDiv = (<Button size="xs" gradientDuoTone="cyanToBlue" id="updateButton">新版本可更新</Button>)
+
+  if (process.env.NODE_ENV === 'production' && "serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/service-worker.js", { scope: "/" })
+      .then((registration) => {
+        // registration worked
+        if (registration.waiting) {
+          setCanUpdate(true)
+          const button = document.getElementById('updateButton')
+          if (button) {
+            button.onclick =() => {
+              registration.waiting.postMessage({type: 'SKIP_WAITING'})
+              window.location.reload()
+            }
+          }
+        }
+        
+      })
+      .catch((error) => {
+        // registration failed
+        console.error(`Registration failed with ${error}`);
+      });
+  }
+
   return (
     <nav className="fixed z-30 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
       <div className="py-3 px-3 lg:px-5 lg:pl-3">
@@ -206,8 +236,14 @@ function NavbarLayout () {
           </div>
           <div className="flex items-center">
             {/*  */}
-            <Online><Badge color="green">網路:正常</Badge></Online>
+            <Online>
+              <div className="flex items-center gap-2">
+                {canUpdate ? updateButtonDiv : null}
+                {/* <Badge color="green">網路:正常</Badge> */}
+              </div>  
+            </Online>
             <Offline><Badge color="red">無網路</Badge></Offline>
+            
           </div>
         </div>
       </div>

@@ -20,6 +20,7 @@ function App() {
   useEffect(() => {
     dispatch(getCommoditiesFromIndexedDB())
   }, [])
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

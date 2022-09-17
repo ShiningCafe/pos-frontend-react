@@ -1,6 +1,7 @@
 {
   "short_name": "茶照亭POS",
   "name": "茶照亭-POS系統",
+  "description": "茶照亭開發的免費POS系統",
   "icons": [
     {
       "src": "/icon-192x192.png",
