@@ -11,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+/* 使平板手機觸控時無法縮放螢幕 */
 * {
   touch-action: pan-x pan-y;
 }
@@ -19,4 +19,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* 修正： flowbite 在 手機尺寸的解析度下設置為 height: calc(100% - 2rem); 導致 modal 下方留白 */
+.h-modal {
+  height: 100% !important;
 }
