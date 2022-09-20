@@ -1,18 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import { useSelector, useDispatch } from 'react-redux'
-import { getCategories, selectCategory } from './commoditySlice'
+import { useSelector, useDispatch } from "react-redux";
+import { getCategories, selectCategory } from "./commoditySlice";
+import { Select } from 'flowbite-react'
 
 const CommodityCategoryBar = () => {
-  const dispatch = useDispatch()
-  const categories = useSelector(getCategories)
-  const [selected, setSelected] = useState('全部')
+  const dispatch = useDispatch();
+  const categories = useSelector(getCategories);
+  const [selected, setSelected] = useState("全部");
 
   function selectCategoryEvent(val) {
-    dispatch(selectCategory(val))
-    setSelected(val)
+    dispatch(selectCategory(val));
+    setSelected(val);
   }
-
+  const screenWidth = screen.width;
   const categoryButtons = categories.map((title, idx) => {
     if (selected !== title) {
       return (
@@ -26,7 +27,7 @@ const CommodityCategoryBar = () => {
             {title}
           </span>
         </button>
-      )
+      );
     } else {
       return (
         <button
@@ -36,15 +37,25 @@ const CommodityCategoryBar = () => {
         >
           <span className="py-2.5">{title}</span>
         </button>
-      )
+      );
     }
-  })
+  });
 
   return (
-    <div className="grid grid-cols-2 gap-2 mt-4 w-full md:grid-cols-6 xl:grid-cols-8">
-      {categoryButtons}
-    </div>
-  )
-}
+    <React.Fragment>
+      {screenWidth < 640 ? (
+        <Select onChange={event => { selectCategoryEvent(event.target.value) }}>
+          {categories.map((title, idx) => {
+            return (<option key={`option_${idx}`} value={title} >{title}</option>)
+          })}
+        </Select>
+      ) : (
+        <div className="grid grid-cols-2 gap-2 mt-4 w-full md:grid-cols-6 xl:grid-cols-8">
+          {categoryButtons}
+        </div>
+      )}
+    </React.Fragment>
+  );
+};
 
-export default CommodityCategoryBar
+export default CommodityCategoryBar;

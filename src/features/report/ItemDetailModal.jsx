@@ -44,8 +44,8 @@ const ItemDetailModal = forwardRef((props, ref) => {
           <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
             {item.name}
           </Table.Cell>
-          <Table.Cell>{textSpecList}</Table.Cell>
-          <Table.Cell>${textPriceWithSpec.currency()}</Table.Cell>
+          <Table.Cell className="whitespace-nowrap">{textSpecList}</Table.Cell>
+          <Table.Cell className="whitespace-nowrap">${textPriceWithSpec.currency()}</Table.Cell>
         </Table.Row>
       );
     });
