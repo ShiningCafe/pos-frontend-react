@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // import logoSvg from '../images/logo.svg'
 import logoPng from '../images/logo.png'
 // import userPng from '../images/user.png'
 // import LayoutDropdown from './LayoutDropdown';
 import { Badge, Button } from 'flowbite-react'
+import { HiRefresh, HiStatusOffline } from 'react-icons/hi'
 import { Offline, Online } from "react-detect-offline";
-import { useState } from 'react';
 
 function NavbarLayout () {
   
@@ -240,9 +240,18 @@ function NavbarLayout () {
               <div className="flex items-center gap-2">
                 {canUpdate ? updateButtonDiv : null}
                 {/* <Badge color="green">網路:正常</Badge> */}
+                <HiRefresh className="w-5 h-5 text-gray-500" onClick={() => window.location.reload()}></HiRefresh>
               </div>  
+              
             </Online>
-            <Offline><Badge color="red">無網路</Badge></Offline>
+            <Offline>
+              <Badge color="red">
+                <div className="flex items-center gap-2">
+                  <HiStatusOffline className="w-5 h-5"></HiStatusOffline>
+                  <p>無網路</p>
+                </div>
+              </Badge>
+            </Offline>
             
           </div>
         </div>
