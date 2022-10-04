@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, Fragment, useState, useRef } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 // dexie db
-import { db } from "../../app/db";
+import { db } from "../../../app/db";
 import { useLiveQuery } from "dexie-react-hooks";
 // redux
 import { useDispatch } from "react-redux";
@@ -11,16 +11,16 @@ import {
   createCommodityToIndexedDB,
   updateCommodityToIndexedDB,
   deleteCommodityToIndexedDB,
-} from "../commodity/commoditySlice";
-import { activeNotify } from "../../layouts/notifySlice";
+} from "../../commodity/commoditySlice";
+import { activeNotify } from "../../../layouts/notifySlice";
 // UI element
 import { TextInput, Button, ToggleSwitch, ListGroup } from "flowbite-react";
 import { HiPlus, HiChevronUp, HiChevronDown } from 'react-icons/hi'
-import Card from "../../components/ui/Card";
-import ToggleButton from "../../components/ui/ToggleButton";
+import Card from "../../../components/ui/Card";
+import ToggleButton from "../../../components/ui/ToggleButton";
 import CategoryInput from "./CategoryInput";
 import SpecCommonSaveModal from "./SpecCommonSaveModal";
-import NewButton from "../../components/ui/Button";
+import NewButton from "../../../components/ui/Button";
 
 const SettingCommodityFullpage = () => {
   const { id } = useParams();
@@ -129,9 +129,6 @@ const SettingCommodityFullpage = () => {
     let data = { ...commodity };
     data._id = nanoid();
     data.name = data.name + '- 複製'
-    // 轉存 unix timestamp
-    const datetime = new Date();
-    data.createdAt = Math.floor(datetime / 1000);
     data.price = parseInt(data.price)
     dispatch(createCommodityToIndexedDB(data)).then(() => {
       navigate(`/setting/commodity/${data._id}`)

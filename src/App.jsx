@@ -1,12 +1,18 @@
 import { Routes, Route } from 'react-router-dom'
+//
+// Pages
+//
 import Layout from './layouts/Layout'
 // import TestPage from './pages/test'
 import Dashboard from './features/dashboard/Dashboard'
 import Commodity from './features/commodity/Commodity'
+// report
 import DayReport from './features/report/DayReport'
 import MonthReport from './features/report/MonthReport'
-import SettingCommodity from './features/setting/SettingCommodity'
-import SettingCommodityFullpage from './features/setting/SettingCommodityFullpage'
+// setting
+import SettingCommodity from './features/setting/commodity/SettingCommodity'
+import SettingCommodityFullpage from './features/setting/commodity/SettingCommodityFullpage'
+import SettingClient from './features/setting/client/SettingClient'
 //
 // redux
 //
@@ -28,8 +34,10 @@ function App() {
         <Route path="/commodity" element={<Commodity />}></Route>
         <Route path="/day-report" element={<DayReport />}></Route>
         <Route path="/month-report" element={<MonthReport />}></Route>
+         {/* Setting */}
         <Route path="/setting/commodity" element={<SettingCommodity />}></Route>
         <Route path="/setting/commodity/:id" element={<SettingCommodityFullpage />}></Route>
+        <Route path="/setting/client" element={<SettingClient />}></Route>
       </Route>
     </Routes>
   )

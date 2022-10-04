@@ -8,7 +8,7 @@ const SidebarList = [
   {
     title: '商品',
     icon: 'ViewGridAddIcon',
-    // label: '99+',
+    label: '99+',
     path: '/commodity',
   },
   {
@@ -32,6 +32,11 @@ const SidebarList = [
       {
         title: '商品設定',
         path: '/setting/commodity'
+      },
+      {
+        title: '雲端同步',
+        path: '/setting/client',
+        label: 'test'
       }
     ]
   }

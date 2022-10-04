@@ -72,9 +72,10 @@ const ItemDetailModal = forwardRef((props, ref) => {
 
   function voidEvent() {
     if (!order) return;
-    
-    db.orders.update(order._id, { voidedAt: new Date() }).then(update => {
-      if (update) setOrder({ ...order, voidedAt: true })
+    order.voidedAt = Math.floor(new Date() / 1000);
+    order.updatedAt = Math.floor(new Date() / 1000);
+    db.orders.update(order._id, {...order}).then(update => {
+      if (update) setOrder({...order})
     });
     onClose();
   }

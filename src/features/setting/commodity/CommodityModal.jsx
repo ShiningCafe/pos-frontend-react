@@ -15,8 +15,8 @@ import {
   createCommodityToIndexedDB,
   updateCommodityToIndexedDB,
   // deleteCommodityToIndexedDB,
-} from "../commodity/commoditySlice";
-import { activeNotify } from "../../layouts/notifySlice";
+} from "../../commodity/commoditySlice";
+import { activeNotify } from "../../../layouts/notifySlice";
 // Component
 import CategoryInput from "./CategoryInput";
 
@@ -67,8 +67,6 @@ const CommodityModal = forwardRef((props, ref) => {
     data.price = parseInt(data.price)
     if (commodity.isCreate) {
       delete data.isCreate;
-      const datetime = new Date();
-      data.createdAt = Math.floor(datetime / 1000);
       dispatch(createCommodityToIndexedDB(data)).then(() => {
         dispatch(activeNotify({ type: 'success', message: '商品已新建'}))
         close();

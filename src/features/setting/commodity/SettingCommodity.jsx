@@ -7,9 +7,9 @@ import {
   Button,
   Select,
 } from "flowbite-react";
-import { db } from "../../app/db";
+import { db } from "../../../app/db";
 import { useLiveQuery } from "dexie-react-hooks";
-import { getCategories } from '../commodity/commoditySlice'
+import { getCategories } from '../../commodity/commoditySlice'
 import { useSelector } from "react-redux";
 import CommodityModal from "./CommodityModal";
 

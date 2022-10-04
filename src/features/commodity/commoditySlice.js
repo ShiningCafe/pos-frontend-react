@@ -76,7 +76,10 @@ export const getCommoditiesFromIndexedDB = createAsyncThunk('commoditiy/get',
 )
 export const createCommodityToIndexedDB = createAsyncThunk('commodity/post',
   async (data) => {
+    data.createdAt = Math.floor(new Date() / 1000);
+    data.updatedAt = 0;
     await db.commodities.add(data)
+    console.log('createCommodityToIndexedDB', data)
     return data
   }
 )
@@ -84,6 +87,7 @@ export const updateCommodityToIndexedDB = createAsyncThunk('commodity/update',
   async (data) => {
     const storeData = _.cloneDeep(data)
     delete data._id
+    data.updatedAt = Math.floor(new Date() / 1000);
     await db.commodities.update(storeData._id, data)
     return storeData
   }

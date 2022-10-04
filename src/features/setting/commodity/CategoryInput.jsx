@@ -3,7 +3,7 @@ import propTypes from "prop-types";
 import { Checkbox, TextInput } from "flowbite-react";
 //
 import { useSelector } from "react-redux";
-import { getCategories } from "../commodity/commoditySlice";
+import { getCategories } from "../../commodity/commoditySlice";
 
 const CategoryInput = forwardRef((props, ref) => {
 

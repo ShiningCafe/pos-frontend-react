@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { HiX } from 'react-icons/hi'
 import propTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { activeNotify } from '../../layouts/notifySlice'
+import { activeNotify } from '../../../layouts/notifySlice'
 
 const SpecCommonSaveModal = forwardRef((props, ref) => {
   const dispatch = useDispatch();

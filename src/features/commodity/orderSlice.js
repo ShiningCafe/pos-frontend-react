@@ -47,7 +47,7 @@ export const orderSlice = createSlice({
           price: total,
           createdAt: new Date(),
           voidedAt: null,
-          syncedAt: null,
+          updatedAt: Math.floor(new Date() / 1000),
         }
         console.log(final)
         db.orders.add(final)
