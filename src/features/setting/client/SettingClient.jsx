@@ -15,9 +15,13 @@ import { useDispatch } from "react-redux";
 import { useLiveQuery } from "dexie-react-hooks";
 import _ from "lodash";
 import { db } from "../../../app/db";
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 const SettingClient = () => {
+  dayjs.extend(relativeTime);
   const dispatch = useDispatch();
+  const [params] = useSearchParams();
   const api = new Api();
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({
@@ -34,24 +38,28 @@ const SettingClient = () => {
     if (userDataLocalStorage) setUser(userDataLocalStorage);
     if (token) {
       // 之後要再驗證token時效
-      api.get("users").then((res) => {
-        if (res.data.data[0]) {
-          localStorage.setItem("user", JSON.stringify(res.data.data[0]));
-          setUser(res.data.data[0]);
-        }
-      });
+      getUser();
       setIsLogin(true);
     } else {
       // 拿取登入後重新導向後的網址參數
       // http://localhost:3000/setting/client?access_token=eyJhbGciOiJIU.....
-      const [params] = useSearchParams();
       if (params.get("access_token")) {
         const token = params.get("access_token");
         localStorage.setItem("token", token);
+        setTimeout(() => getUser(), 1500)
         setIsLogin(true);
       }
     }
   }, []);
+
+  function getUser () {
+    api.get("users").then((res) => {
+      if (res.data.data[0]) {
+        localStorage.setItem("user", JSON.stringify(res.data.data[0]));
+        setUser(res.data.data[0]);
+      }
+    });
+  }
 
   const loginButton = (
     <div className="grid pt-5">
@@ -102,8 +110,9 @@ const SettingClient = () => {
     },
   ];
   const [list, setList] = useState(listInit);
-  const lastSyncAt = parseInt(localStorage.getItem("lastSyncAt"));
+  const [timeFromLastUpdated, setTimeFromLastUpdated] = useState();
   useLiveQuery(async () => {
+    const lastSyncAt = parseInt(localStorage.getItem("lastSyncAt"));
     const cloneList = _.cloneDeep(list);
     if (!lastSyncAt) {
       // 重未同步過
@@ -111,14 +120,16 @@ const SettingClient = () => {
         item.create = await db[item.name].toArray();
       }
     } else {
+      setTimeFromLastUpdated(dayjs(new Date(lastSyncAt * 1000)).fromNow())
       for (let item of cloneList) {
         item.create = await db[item.name]
-          .where("updatedAt")
+          .where("uploadedAt")
           .equals(0)
           .toArray();
         item.update = await db[item.name]
           .where("updatedAt")
           .above(lastSyncAt)
+          .and(item => item.uploadedAt !== 0)
           .toArray();
       }
     }
@@ -128,12 +139,16 @@ const SettingClient = () => {
   // upload event
   //
   function uploadData() {
+    const unixtime = Math.floor(new Date()/1000);
     const promise = [];
     for (let category of list) {
       if (category.create.length > 0) {
         promise.push(
           api.post(category.name, category.create).then(() => {
             console.log(`${category.name} => 新增同步成功`);
+            for (let item of category.create) {
+              db[category.name].update(item._id, { uploadedAt: unixtime })
+            }
           })
         );
       }
@@ -142,6 +157,7 @@ const SettingClient = () => {
           promise.push(
             api.put(category.name, item).then(() => {
               console.log(`${category.name} ${item._id} => 更新同步成功`);
+              db[category.name].update(item._id, { uploadedAt: unixtime })
             })
           );
         }
@@ -151,8 +167,8 @@ const SettingClient = () => {
     Promise.all(promise)
       .then(() => {
         // 當全部完成
+        localStorage.setItem("lastSyncAt", Math.floor(new Date() / 1000) + 1);
         setList(listInit);
-        localStorage.setItem("lastSyncAt", Math.floor(new Date() / 1000));
         dispatch(activeNotify({ type: "success", message: "同步完成" }));
       })
       .catch((err) => {
@@ -186,7 +202,7 @@ const SettingClient = () => {
           <div className="flex flex-wrap gap-2">
             <span>同步狀態</span>
             <Badge color="gray" icon={HiClock} className="self-center">
-              3 days ago
+              {timeFromLastUpdated}
             </Badge>
           </div>
           {!isLogin ? (

@@ -304,7 +304,7 @@ const FirstModal = () => {
         ],
       },
       {
-        _id: "31242457",
+        _id: nanoid(),
         name: "華碩G10CE搭配GTX1660Ti顯卡",
         categories: ["電競主機"],
         price: 28990,

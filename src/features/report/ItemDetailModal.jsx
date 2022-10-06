@@ -1,9 +1,11 @@
 import React, { forwardRef, useState, useImperativeHandle } from "react";
+import { useDispatch } from "react-redux";
+import { voidOrder } from "../commodity/orderSlice";
 import { Modal, Button, Table } from "flowbite-react";
-import { db } from "../../app/db";
 import dayjs from "dayjs";
 
 const ItemDetailModal = forwardRef((props, ref) => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [order, setOrder] = useState({});
 
@@ -72,11 +74,7 @@ const ItemDetailModal = forwardRef((props, ref) => {
 
   function voidEvent() {
     if (!order) return;
-    order.voidedAt = Math.floor(new Date() / 1000);
-    order.updatedAt = Math.floor(new Date() / 1000);
-    db.orders.update(order._id, {...order}).then(update => {
-      if (update) setOrder({...order})
-    });
+    dispatch(voidOrder(order));
     onClose();
   }
 

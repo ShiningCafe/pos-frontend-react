@@ -77,7 +77,8 @@ export const getCommoditiesFromIndexedDB = createAsyncThunk('commoditiy/get',
 export const createCommodityToIndexedDB = createAsyncThunk('commodity/post',
   async (data) => {
     data.createdAt = Math.floor(new Date() / 1000);
-    data.updatedAt = 0;
+    data.updatedAt = Math.floor(new Date() / 1000);
+    data.uploadedAt = 0;
     await db.commodities.add(data)
     console.log('createCommodityToIndexedDB', data)
     return data

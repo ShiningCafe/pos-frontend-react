@@ -48,15 +48,21 @@ export const orderSlice = createSlice({
           createdAt: new Date(),
           voidedAt: null,
           updatedAt: Math.floor(new Date() / 1000),
+          uploadedAt: 0,
         }
-        console.log(final)
         db.orders.add(final)
       })
+    },
+    voidOrder: (state, action) => {
+      const id = action.payload._id
+      if (!id) throw new Error('no matched Id');
+      const unixtime = Math.floor(new Date()/1000);
+      db.orders.update(id, { voidedAt: unixtime, updatedAt: unixtime });
     }
   },
 })
 
 export const getOrder = (state) => state.order.order
 
-export const { insertToOrder, spliceOrder, dumpOrder, checkoutOrder } = orderSlice.actions
+export const { insertToOrder, spliceOrder, dumpOrder, checkoutOrder, voidOrder } = orderSlice.actions
 export default orderSlice.reducer
