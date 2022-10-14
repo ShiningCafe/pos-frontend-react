@@ -40,6 +40,9 @@ function Api () {
   this.put = (url, data = null) => {
     return axios.put(`${url}/${data._id}`, data)
   }
+  this.patch = (url, data = null) => {
+    return axios.patch(`${url}/${data._id}`, data)
+  }
   this.delete = (url, data = null) => {
     return axios.delete(url, { params: data })
   }

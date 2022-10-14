@@ -58,7 +58,10 @@ const SettingClient = () => {
         localStorage.setItem("user", JSON.stringify(res.data.data[0]));
         setUser(res.data.data[0]);
       }
-    });
+    }).catch(() => {
+      localStorage.removeItem('token');
+      window.location.reload();
+    })
   }
 
   const loginButton = (
@@ -139,35 +142,48 @@ const SettingClient = () => {
   // upload event
   //
   function uploadData() {
+    // Notify
+    dispatch(activeNotify({ type: "warning", message: "同步開始，請稍候" }));
+
     const unixtime = Math.floor(new Date()/1000);
     const promise = [];
+    // 將資料同步至伺服器
     for (let category of list) {
       if (category.create.length > 0) {
+        for (let item of category.create) {
+          item.uploadedAt = unixtime;
+          db[category.name].update(item._id, { uploadedAt: unixtime });
+        }
         promise.push(
           api.post(category.name, category.create).then(() => {
             console.log(`${category.name} => 新增同步成功`);
-            for (let item of category.create) {
-              db[category.name].update(item._id, { uploadedAt: unixtime })
-            }
           })
         );
       }
       if (category.update.length > 0) {
         for (let item of category.update) {
+          item.uploadedAt = unixtime;
+          db[category.name].update(item._id, { uploadedAt: unixtime });
           promise.push(
             api.put(category.name, item).then(() => {
               console.log(`${category.name} ${item._id} => 更新同步成功`);
-              db[category.name].update(item._id, { uploadedAt: unixtime })
             })
           );
         }
       }
     }
-    dispatch(activeNotify({ type: "warning", message: "同步開始，請稍候" }));
+    // 將 uploadedAt 寫入 user 表，用來判斷是否線上線下同步
+    // promise.push(api.patch('users', { _id: user._id, uploadedAt: unixtime }))
+
+    // 處理同步結束的事件 
     Promise.all(promise)
       .then(() => {
         // 當全部完成
-        localStorage.setItem("lastSyncAt", Math.floor(new Date() / 1000) + 1);
+        // 先記錄這次同步的時間
+        return api.post('upload-histories', { unixtime: unixtime });
+      })
+      .then(() => {
+        localStorage.setItem("lastSyncAt", unixtime);
         setList(listInit);
         dispatch(activeNotify({ type: "success", message: "同步完成" }));
       })
@@ -258,6 +274,9 @@ const SettingClient = () => {
               </div>
             </React.Fragment>
           )}
+        </Card>
+        <Card>
+          <p></p>
         </Card>
       </div>
     </div>
