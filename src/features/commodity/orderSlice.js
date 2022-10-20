@@ -45,7 +45,7 @@ export const orderSlice = createSlice({
           serial: serialNumber,
           contents: order,
           price: total,
-          createdAt: new Date(),
+          createdAt: Math.floor(new Date() / 1000),
           voidedAt: null,
           updatedAt: Math.floor(new Date() / 1000),
           uploadedAt: 0,

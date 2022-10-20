@@ -24,7 +24,7 @@ const DayReport = () => {
   const originData = useLiveQuery(async () => {
     return await db.orders
       .where("createdAt")
-      .between(new Date(`${today} 00:00:00`), new Date(`${today} 23:59:59`))
+      .between(Math.floor(new Date(`${today} 00:00:00`)/1000), Math.floor(new Date(`${today} 23:59:59`)/1000))
       .toArray();
   }, [params]);
   const data = originData

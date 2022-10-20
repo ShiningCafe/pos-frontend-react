@@ -24,7 +24,7 @@ const MonthReport = () => {
   const originData = useLiveQuery(async () => {
     const startDate = `${year}/${month}/01`
     const endDate = `${year}/${month}/${dayjs(`${year}/${month}`).daysInMonth()}`
-    return await db.orders.where('createdAt').between(new Date(`${startDate} 00:00:00`), new Date(`${endDate} 23:59:59`)).toArray();
+    return await db.orders.where('createdAt').between(Math.floor(new Date(`${startDate} 00:00:00`)/1000), Math.floor(new Date(`${endDate} 23:59:59`)/1000)).toArray();
   })
   const data = originData ? originData.filter(el => el.voidedAt === null) : []
 
