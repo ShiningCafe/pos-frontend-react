@@ -229,7 +229,7 @@ const CommodityCardModal = () => {
         <Modal.Header>{commodity?.name}</Modal.Header>
         <Modal.Body>
           <div className="space-y-2 mb-2">{specDiv}</div>
-          { showAlert ? (<Alert color="red" icon={HiInformationCircle}>
+          { showAlert ? (<Alert color="failure" icon={HiInformationCircle}>
             <span>
               <span className="font-medium">注意!</span> [{ alertColumns.toString() }]欄位尚未填寫
             </span>

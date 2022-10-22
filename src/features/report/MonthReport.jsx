@@ -71,7 +71,7 @@ const MonthReport = () => {
     let workedDay = 0
     days.forEach(date => {
       const filter = data.filter(d => {
-        return dayjs(d.createdAt).isSame(dayjs(`${year}/${month}/${date}`), 'day')
+        return dayjs.unix(d.createdAt).isSame(dayjs(`${year}/${month}/${date}`), 'day')
       })
       totalPricePerDay.push(filter.reduce((sum, c) => sum + c.price, 0))
       totalOrderPerDay.push(filter.length)
@@ -147,7 +147,7 @@ const MonthReport = () => {
   let dailyDiv = []
 
   function renderDailyDiv () {
-    const dataGB = _.groupBy(data, el => dayjs(el.createdAt).format('YYYY/MM/DD'))
+    const dataGB = _.groupBy(data, el => dayjs.unix(el.createdAt).format('YYYY/MM/DD'))
     _.each(dataGB, (dataset, date) => {
       const sum = dataset.reduce((sum, c) => sum + c.price, 0)
       dailyDiv.push(

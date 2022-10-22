@@ -62,13 +62,14 @@ const CategoryInput = forwardRef((props, ref) => {
         {categories.map((item) => {
           return (
             <div className="flex" key={`checkbox_${item}`}>
-              <Checkbox
-                id={`checkbox_${item}`}
-                className="self-center"
-                onChange={handleSelect}
-                value={item}
-                checked={selected.includes(item)}
-              />
+              <div className="self-center">
+                <Checkbox
+                  id={`checkbox_${item}`}
+                  onChange={handleSelect}
+                  value={item}
+                  checked={selected.includes(item)}
+                />
+              </div>
               <label htmlFor={`checkbox_${item}`} className="ml-1">
                 {item}
               </label>

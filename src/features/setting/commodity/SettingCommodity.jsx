@@ -19,7 +19,7 @@ const SettingCommodity = () => {
 
   // get Data
   const data = useLiveQuery(async () => {
-    return await db.commodities.toArray();
+    return await db.commodities.filter(e => !e.deletedAt).toArray();
   });
 
   // options
@@ -36,7 +36,7 @@ const SettingCommodity = () => {
     const slicedData = filteredData.slice(slice, slice + perPage);
     tableDiv = slicedData.map((el) => {
       const badgeDiv = el.categories.map((e) => (
-        <Badge color="blue" key={`badge_${el.id}_${e}`}>
+        <Badge color="info" key={`badge_${el.id}_${e}`}>
           {e}
         </Badge>
       ));
@@ -91,9 +91,11 @@ const SettingCommodity = () => {
             <p className="my-4">商品設定</p>
           </div>
           <div className="inline-flex gap-2">
-            <Select id="countries"className="w-36" onChange={e => setSelectedCategory(e.target.value)}>
-              {optionsDiv}
-            </Select>
+            <div className="w-36">
+              <Select id="countries" onChange={e => setSelectedCategory(e.target.value)}>
+                {optionsDiv}
+              </Select>
+            </div>
             <Button onClick={() => detailModal.current.open(null)}>新增商品</Button>
           </div>
         </div>

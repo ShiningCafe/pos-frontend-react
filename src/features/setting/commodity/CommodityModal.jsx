@@ -118,8 +118,8 @@ const CommodityModal = forwardRef((props, ref) => {
               <div className="inline-flex gap-1">
                 {/* <Button size="xs" color="gray" onClick={() => copyItemEvent()}><HiDuplicate className="h-5 w-5"/></Button>
                 <Button size="xs" color="gray" onClick={() => deleteItemEvent()}><HiTrash className="h-5 w-5" /></Button> */}
-                <button size="xs" color="gray" onClick={() => navigate(`/setting/commodity/${commodity._id}`) }>進階設定</button>
-                <Button size="xs" color="gray" onClick={close}><HiX className="h-5 w-5" /></Button>
+                <button color="gray" onClick={() => navigate(`/setting/commodity/${commodity._id}`) }>進階設定</button>
+                <button className="px-3" color="gray" onClick={close}><HiX className="h-5 w-5" /></button>
               </div>
             ) : '' }
           </div>

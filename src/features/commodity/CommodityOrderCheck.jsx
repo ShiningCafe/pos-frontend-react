@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
-import { Button, Modal, Table } from 'flowbite-react'
+import { Modal, Table } from 'flowbite-react'
+import Button from '../../components/ui/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrder, dumpOrder, spliceOrder, checkoutOrder } from './orderSlice'
 import { activeNotify } from '../../layouts/notifySlice'
@@ -27,8 +28,7 @@ const CommodityOrderCheck = () => {
     buttonDiv = (
       <Button
         onClick={onOpen}
-        gradientDuoTone="pinkToOrange"
-        className="fixed bottom-0 right-0 mx-2 mb-6 z-50"
+        className="fixed bottom-0 right-0 mx-2 mb-6 z-50 text-white bg-blue-700 hover:bg-blue-800"
       >
         結帳 ${totalPrice ? totalPrice.currency() : 0}
       </Button>
@@ -122,14 +122,14 @@ const CommodityOrderCheck = () => {
         </Modal.Body>
         <Modal.Footer className="flex justify-between">
           <div className="inline-flex">
-            <Button className="w-24" onClick={checkout} disabled={order.length <= 0}>
+            <Button className="text-white bg-blue-700 hover:bg-blue-800" onClick={checkout} disabled={order.length <= 0}>
               結帳
             </Button>
-            <Button className="w-24" color="gray" onClick={onClose}>
+            <Button className="bg-white" color="gray" onClick={onClose}>
               取消
             </Button>
           </div>
-          <Button className="text-red-600" color="gray" onClick={dumpOrderEvent}>
+          <Button className="text-red-600 bg-white" onClick={dumpOrderEvent}>
             清空訂單
           </Button>
         </Modal.Footer>

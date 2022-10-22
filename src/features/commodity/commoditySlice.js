@@ -71,7 +71,7 @@ export const getCategories = (state) => {
 }
 export const getCommoditiesFromIndexedDB = createAsyncThunk('commoditiy/get',
   async () => {
-    return await db.commodities.toArray()
+    return await db.commodities.filter(e => !e.deletedAt).toArray();
   }
 )
 export const createCommodityToIndexedDB = createAsyncThunk('commodity/post',
@@ -95,7 +95,9 @@ export const updateCommodityToIndexedDB = createAsyncThunk('commodity/update',
 )
 export const deleteCommodityToIndexedDB = createAsyncThunk('commodity/delete',
   async (data) => {
-    await db.commodities.delete(data._id)
+    // v0.1.2 改為軟刪除方便做資料同步
+    data.deletedAt = Math.floor(new Date() / 1000);
+    await db.commodities.update(data._id, data)
     return data._id
   }
 )
