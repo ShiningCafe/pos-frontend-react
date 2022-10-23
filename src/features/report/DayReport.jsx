@@ -62,7 +62,7 @@ const DayReport = () => {
                 {item.name}
               </Table.Cell>
               <Table.Cell>
-                {idx === 0 ? dayjs(order.createdAt).format("HH:mm:ss") : ""}
+                {idx === 0 ? dayjs.unix(order.createdAt).format("HH:mm:ss") : ""}
               </Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-blue-600 dark:text-blue-500">
                 {idx === 0 ? (
@@ -125,7 +125,7 @@ const DayReport = () => {
     let maxOrderPerHour = 0;
     hours.forEach((h) => {
       const filter = data.filter(
-        (el) => h === parseInt(dayjs(el.createdAt).format("HH"))
+        (el) => h === parseInt(dayjs.unix(el.createdAt).format("HH"))
       );
       totalOrderPerHour.push(filter.length);
       if (filter.length > maxOrderPerHour) maxOrderPerHour = filter.length;

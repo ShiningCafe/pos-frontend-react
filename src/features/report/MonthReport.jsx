@@ -43,7 +43,7 @@ const MonthReport = () => {
     status.totalOrder = data.length
     let perPrice = status.totalIncome / status.totalOrder
     status.perPrice = perPrice > 0 ? perPrice.toFixed(2) : 0
-    status.avgIncome = Math.round((status.totalIncome /_.size(_.groupBy(data, el => dayjs(el.createdAt).format('YYYY/MM/DD')))))
+    status.avgIncome = Math.round((status.totalIncome /_.size(_.groupBy(data, el => dayjs.unix(el.createdAt).format('YYYY/MM/DD')))))
   }
 
   //
@@ -61,7 +61,7 @@ const MonthReport = () => {
         days.push(i)
       } else {
         // 顯示只有營收的日期
-        if (data.some(el => dayjs(el.createdAt).isSame(dayjs(`${year}/${month}/${i}`), 'day'))) days.push(i)
+        if (data.some(el => dayjs.unix(el.createdAt).isSame(dayjs(`${year}/${month}/${i}`), 'day'))) days.push(i)
       }
     }
     const totalPricePerDay = []

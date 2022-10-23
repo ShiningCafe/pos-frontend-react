@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 //
-import { Avatar, Table, Button, Badge } from "flowbite-react";
-import { HiUpload, HiClock, HiDownload } from "react-icons/hi";
+import { Avatar, Table, Button, Badge, Alert } from "flowbite-react";
+import { HiUpload, HiClock, HiDownload, HiInformationCircle } from "react-icons/hi";
 //
 import Card from "../../../components/ui/Card";
 import GoogleButton from "react-google-button";
@@ -96,6 +96,7 @@ const SettingClient = () => {
       {process.env.NODE_ENV === "production" ? (
         <GoogleButton
           className="justify-self-center"
+          label="以 Google 帳號登入"
           onClick={() =>
             (window.location.href =
               "https://sys-api.shiningcafe.com/oauth/google")
@@ -105,6 +106,7 @@ const SettingClient = () => {
         // 開發環境
         <GoogleButton
           className="justify-self-center"
+          label="以 Google 帳號登入"
           onClick={() =>
             (window.location.href = "http://localhost:3030/oauth/google")
           }
@@ -292,6 +294,17 @@ const SettingClient = () => {
             ) : (
               ""
             )}
+          </div>
+          <div className="my-3">
+            <Alert
+              color="info"
+              additionalContent={<React.Fragment><div className="mt-2 mb-4 text-sm text-blue-700 dark:text-blue-800">所有資料都「儲存」在您的裝置上，即便同步至伺服器也僅是將資料備份到伺服器上，方便日後更換裝置時作切換。</div></React.Fragment>}
+              icon={HiInformationCircle}
+            >
+              <h3 className="text-lg font-medium text-blue-700 dark:text-blue-800">
+                關於資料儲存的注意事項
+              </h3>
+            </Alert>
           </div>
           {!isLogin ? (
             skeleton
