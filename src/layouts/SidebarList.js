@@ -8,7 +8,6 @@ const SidebarList = [
   {
     title: '商品',
     icon: 'ViewGridAddIcon',
-    label: '99+',
     path: '/commodity',
   },
   {

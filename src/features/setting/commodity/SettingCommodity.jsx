@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Card,
   Table,
@@ -27,6 +27,9 @@ const SettingCommodity = () => {
   const categories = useSelector(getCategories)
   const optionsDiv = categories.map(el => (<option key={`categroies_option_${el}`} value={el}>{el}</option>))
 
+  useEffect(() => {
+    setSlice(0);
+  }, [selectedCategory])
   // renderTable
   let tableDiv;
   let pagenationDiv;
