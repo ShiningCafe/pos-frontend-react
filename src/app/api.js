@@ -2,6 +2,8 @@ import axios from 'axios'
 import _ from 'lodash'
 
 axios.defaults.baseURL = 'http://localhost:3030/'
+if (process.env.NODE_ENV === "production") axios.defaults.baseURL = 'https://sys-api.shiningcafe.com'
+
 // axios.defaults.headers.common['X-DATA-Authorization'] = crypto()
 
 // 攔截器

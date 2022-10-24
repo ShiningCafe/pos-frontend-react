@@ -83,7 +83,7 @@ const SettingCommodityFullpage = () => {
   }
 
   function updateSpec () {
-    const newSpec = commodity.specification
+    const newSpec = [...commodity.specification]
     newSpec[selectedIndex] = selectedSpec
     setCommodity({ ...commodity, specification: newSpec })
   }
@@ -131,9 +131,9 @@ const SettingCommodityFullpage = () => {
     data.name = data.name + '- 複製'
     data.price = parseInt(data.price)
     dispatch(createCommodityToIndexedDB(data)).then(() => {
+      setCommodity(data);
+      dispatch(activeNotify({ type: 'success', message: '商品複製成功'}));
       navigate(`/setting/commodity/${data._id}`)
-      setCommodity(data)
-      dispatch(activeNotify({ type: 'success', message: '商品複製成功'}))
     });
   }
 
