@@ -8,7 +8,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 // others
 import dayjs from "dayjs";
 //
-import LineChart from "../../components/LineChart";
+import LineChart from "../../components/charts/LineChart";
 import ItemDoughnutChart from "./ItemDoughnutChart";
 import ItemDistributed from "./ItemDistributed";
 import ItemDetailModal from "./ItemDetailModal";

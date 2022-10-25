@@ -1,5 +1,5 @@
 import React from 'react'
-import PieChart from '../../components/PieChart';
+import PieChart from '../../components/charts/PieChart';
 import { getCategories } from '../commodity/commoditySlice';
 import { useSelector } from 'react-redux';
 import propTypes from 'prop-types';

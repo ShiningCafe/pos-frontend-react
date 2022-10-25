@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import DynamicHeroIcon from '../components/DynamicHeroIcon'
+import DynamicHeroIcon from '../../components/DynamicHeroIcon'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 

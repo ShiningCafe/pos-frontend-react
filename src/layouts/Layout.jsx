@@ -2,12 +2,12 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import ScrollToTop from '../components/ScrollToTop'
 
-import SidebarLayout from './SidebarLayout'
-import NavbarLayout from './NavbarLayout'
-import ToastPop from './ToastPop'
+import SidebarLayout from './sidebar/SidebarLayout'
+import NavbarLayout from './components/NavbarLayout'
+import ToastPop from './components/ToastPop'
 import CommodityOrderCheck from '../features/commodity/CommodityOrderCheck'
 //
-import FirstModal from './FirstModal'
+import FirstModal from './components/FirstModal'
 
 
 const Layout = () => {

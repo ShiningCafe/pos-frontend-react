@@ -96,9 +96,14 @@ export const updateCommodityToIndexedDB = createAsyncThunk('commodity/update',
 export const deleteCommodityToIndexedDB = createAsyncThunk('commodity/delete',
   async (data) => {
     // v0.1.2 改為軟刪除方便做資料同步
-    data.deletedAt = Math.floor(new Date() / 1000);
-    await db.commodities.update(data._id, data)
-    return data._id
+    if (data.uploadedAt === 0) {
+      // 沒上傳過的就本地刪除就好
+      await db.commodities.delete(data._id);
+    } else {
+      data.deletedAt = Math.floor(new Date() / 1000);
+      await db.commodities.update(data._id, data);
+      return data._id
+    }
   }
 )
 

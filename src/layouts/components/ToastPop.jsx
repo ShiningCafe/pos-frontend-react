@@ -2,7 +2,7 @@ import React from "react";
 import { Toast } from "flowbite-react";
 import { HiCheck, HiX, HiExclamation } from "react-icons/hi";
 import { useState } from "react";
-import { getNotify, cancelNotify } from "./notifySlice";
+import { getNotify, cancelNotify } from "../notifySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 

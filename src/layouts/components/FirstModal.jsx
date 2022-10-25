@@ -1,8 +1,8 @@
 import React from "react";
 import { Modal } from "flowbite-react";
-import Button from "../components/ui/Button";
+import Button from "../../components/ui/Button";
 import { useState, useEffect } from "react";
-import { db } from "../app/db";
+import { db } from "../../app/db";
 import { nanoid } from "@reduxjs/toolkit";
 
 const FirstModal = () => {
@@ -16,6 +16,11 @@ const FirstModal = () => {
     localStorage.setItem("init", true);
     initDB();
     initLocalStorage();
+    setShow(false);
+  }
+
+  function submitSync () {
+    localStorage.setItem("init", true);
     setShow(false);
   }
 
@@ -479,15 +484,20 @@ const FirstModal = () => {
               🔥部分頁面功能繁雜在手機版上較難以排版，建議使用平板或是電腦操作🔥
             </p>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
+          <hr className="my-5"/>
           <Button
             onClick={() => submit()}
             className="bg-violet-600 text-white font-bold hover:bg-violet-100"
           >
             了解，並建立範本
           </Button>
-        </Modal.Footer>
+          <Button
+            onClick={() => submitSync()}
+            className="bg-violet-600 text-white font-bold hover:bg-violet-100"
+          >
+            不建立範本，從其他裝置同步資料
+          </Button>
+        </Modal.Body>
       </Modal>
     </React.Fragment>
   );
