@@ -13,6 +13,7 @@ import MonthReport from './features/report/MonthReport'
 import SettingCommodity from './features/setting/commodity/SettingCommodity'
 import SettingCommodityFullpage from './features/setting/commodity/SettingCommodityFullpage'
 import SettingClient from './features/setting/client/SettingClient'
+import SettingDebug from './features/setting/debug/Debug'
 //
 // redux
 //
@@ -38,6 +39,7 @@ function App() {
         <Route path="/setting/commodity" element={<SettingCommodity />}></Route>
         <Route path="/setting/commodity/:id" element={<SettingCommodityFullpage />}></Route>
         <Route path="/setting/client" element={<SettingClient />}></Route>
+        <Route path="/setting/debug" element={<SettingDebug />}></Route>
       </Route>
     </Routes>
   )

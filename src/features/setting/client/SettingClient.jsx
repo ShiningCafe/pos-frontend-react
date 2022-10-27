@@ -264,7 +264,7 @@ const SettingClient = () => {
   }
 
   return (
-    <div className="px-4 pt-6 pb- 2">
+    <div className="px-4 pt-6 pb-2">
       <div className="grid grid-cols-1 gap-2">
         <Card>
           <p>帳號資料</p>

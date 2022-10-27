@@ -30,12 +30,15 @@ const SidebarList = [
     child: [
       {
         title: '商品設定',
-        path: '/setting/commodity'
+        path: '/setting/commodity',
       },
       {
         title: '雲端同步',
         path: '/setting/client',
-        label: 'test'
+      },
+      {
+        title: '開發者模式 🚧',
+        path: '/setting/debug',
       }
     ]
   }
